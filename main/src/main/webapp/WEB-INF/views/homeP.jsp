@@ -14,10 +14,6 @@
 </head>
 
 <body>
-
-<!-- 2020.08.27 Bong merge Test -->
-
-
    <div class="site-wrap">
       <header class="site-navbar" role="banner">
          <!-- 타이틀 로고 -->
