@@ -14,9 +14,6 @@
 </head>
 
 <body>
-<div>
-	<p>정미가 커밋했습니다</p>
-</div>
    <div class="site-wrap">
       <header class="site-navbar" role="banner">
          <!-- 타이틀 로고 -->
