@@ -37,7 +37,9 @@
 	
 <!-- 	2020.07.31 -->
 	<update id="updateC" parameterType="com.itbank.vo.CustomerVO">
-		update customer2 set name=#{name}, password=#{password}, phone=#{phone}, address=#{address}, detailAddress=#{detailAddress}
+		update customer2 
+			set name=#{name}, password=#{password}, phone=#{phone}, address=#{address}, detailAddress=#{detailAddress}
+			where email=#{email}
 	</update>
 	
 <!-- 	2020.08.19+ -->
