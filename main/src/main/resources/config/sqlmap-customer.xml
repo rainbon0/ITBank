@@ -40,6 +40,7 @@
 		update customer2 
 			set name=#{name}, password=#{password}, phone=#{phone}, address=#{address}, detailAddress=#{detailAddress}
 			where email=#{email}
+<!-- 			ㅁㄴㅇ -->
 	</update>
 	
 <!-- 	2020.08.19+ -->
