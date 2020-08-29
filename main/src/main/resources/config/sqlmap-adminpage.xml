@@ -41,6 +41,10 @@
 	select * from orderlist
 </select>
 
+<select id="NotMemberOrderList" resultType="com.itbank.vo.NotMemberOrderListVO">
+	select * from notmemberlist
+</select>
+
 <select id="SalesMerchanRank" resultType="com.itbank.vo.MerchanRankVO">
 	select distinct merchan_code, SUM(order_price) as order_price from orderlist group by merchan_code order by order_price desc
 </select>

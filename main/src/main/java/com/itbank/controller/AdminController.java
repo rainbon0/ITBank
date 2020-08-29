@@ -140,6 +140,11 @@ public class AdminController {
 		List<MerchanRankVO> sqlMerchanRank = ads.SalesMerchanRank();		
 		mav.addObject("sqlMerchanRank", sqlMerchanRank);
 		mav.addObject("sqlMerchanRankSize", sqlMerchanRank.size());
+//		ArrayList<String> merchanLables = new ArrayList<String>();
+//		for (int i = 0; i < sqlMerchanRank.size(); i++) {
+//			merchanLables.add(sqlMerchanRank.get(i).getMerchanCode());
+//		}
+//		mav.addObject("merchanLables", merchanLables);
 
 		// 고객번호별 구매 순위
 		List<CustomerRankVO> sqlCustomerRank = ads.SalesCustomerRank();

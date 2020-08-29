@@ -2,8 +2,11 @@ package com.itbank.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +22,7 @@ import com.itbank.vo.BrandVO;
 import com.itbank.vo.CustomerRankVO;
 import com.itbank.vo.ItemChangeVO;
 import com.itbank.vo.MerchanRankVO;
-
+import com.itbank.vo.NotMemberOrderListVO;
 import com.itbank.vo.OrderListVO;
 import com.itbank.vo.PageVO;
 
@@ -268,7 +271,37 @@ public class adminservice {
 
 	// 매출관리 - 매출내역
 	public List<OrderListVO> orderList() {
-		return dao.orderList();
+		List<OrderListVO> orderlist = dao.orderList();
+		List<NotMemberOrderListVO> notmemberorderlist = dao.NotMemberOrderList();
+		System.out.println("orderlist 크기 : " + orderlist.size());
+		System.out.println("notmemberorderlist 크기 : " + notmemberorderlist.size());
+		
+		for(int i = 0; i < notmemberorderlist.size(); i++) {
+			OrderListVO notMember = new OrderListVO();
+			
+			notMember.setCustomerCode(9999999);
+			// 비회원의 경우 코드 번호가 '9999999'
+			notMember.setMerchanCode(notmemberorderlist.get(i).getMerchanCode());
+			notMember.setOrderAddress(notmemberorderlist.get(i).getOrderAddress());
+			notMember.setOrderCode(notmemberorderlist.get(i).getOrderCode());
+			notMember.setOrderCodename(notmemberorderlist.get(i).getOrderCodename());
+			notMember.setOrderDate(notmemberorderlist.get(i).getOrderDate());
+			notMember.setOrderMerchanName(notmemberorderlist.get(i).getOrderMerchanName());
+			notMember.setOrderNotes(notmemberorderlist.get(i).getOrderNotes());
+			notMember.setOrderPayoption(notmemberorderlist.get(i).getOrderPayoption());
+			notMember.setOrderPrice(notmemberorderlist.get(i).getOrderPrice());
+			notMember.setOrderQuantity(notmemberorderlist.get(i).getOrderQuantity());
+			notMember.setOrderRecieveEmail(notmemberorderlist.get(i).getOrderRecieveEmail());
+			notMember.setOrderRecieveName(notmemberorderlist.get(i).getOrderRecieveName());
+			notMember.setOrderRecievePnum(notmemberorderlist.get(i).getOrderRecievePnum());
+			notMember.setShoeSize(notmemberorderlist.get(i).getShoeSize());
+			
+			orderlist.add(notMember);
+		}
+		
+		Collections.sort(orderlist, new OrderDateSorting());
+		
+		return orderlist;
 	}
 
 	// 매출관리 - 오늘 판매금액
@@ -407,6 +440,28 @@ public class adminservice {
 		public int compare(ItemChangeVO o1, ItemChangeVO o2) {
 			return o1.getPrice() > o2.getPrice() ? -1 : o1.getPrice() < o2.getPrice() ? 1:0;
 		}		
+	}
+	
+	// 관리자 - 매출관리 - 날짜정렬
+	static class OrderDateSorting implements Comparator<OrderListVO> {
+
+		// 문자열을 날짜로 변환
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		@Override
+		public int compare(OrderListVO o1, OrderListVO o2) {
+			Date d1 = null;
+			Date d2 = null;
+			try {
+				d1 = sdf.parse(o1.getOrderDate());
+				d2 = sdf.parse(o2.getOrderDate());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			return (d1.getTime() > d2.getTime() ? -1 : 1);
+		}
+		
 	}
 	
 	// 2020.08.14

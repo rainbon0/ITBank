@@ -8,6 +8,7 @@ import com.itbank.vo.BrandVO;
 import com.itbank.vo.CustomerRankVO;
 import com.itbank.vo.ItemChangeVO;
 import com.itbank.vo.MerchanRankVO;
+import com.itbank.vo.NotMemberOrderListVO;
 import com.itbank.vo.OrderListVO;
 import com.itbank.vo.putintoVO;
 
@@ -47,5 +48,6 @@ public interface adminDAO {
 
 	void shoesSizeChange(ItemChangeVO itemChangeVO);
 
+	List<NotMemberOrderListVO> NotMemberOrderList();
 
 }
