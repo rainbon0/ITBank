@@ -11,6 +11,7 @@ import java.util.Map;
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -22,7 +23,8 @@ import com.itbank.vo.MerchanRankVO;
 
 import com.itbank.vo.OrderListVO;
 import com.itbank.vo.PageVO;
-
+import com.itbank.vo.ProductRegistVO;
+import com.itbank.vo.SizeQuantityVO;
 import com.itbank.vo.putintoVO;
 
 @Service
@@ -48,8 +50,35 @@ public class adminservice {
 	public List<BrandVO> brandList() {
 		return dao.brandList();
 	}
-
 	
+	
+	// Bong 상품 등록
+	@Transactional
+	public int merchandiseRegist(ProductRegistVO prVO, MultipartFile mpFile1, MultipartFile mpFile2) throws IllegalStateException, IOException{
+		System.out.println("상품 등록 Bong : " + prVO.getMerchanCode());
+		joinForm(prVO.getMerchanCode(),prVO.getMerchanName(), prVO.getPrice(), prVO.getBrand(),prVO.getCategory(),mpFile1,mpFile2);
+		insertShoeSize(prVO.getMerchanCode(),prVO.getQuantity250(),prVO.getQuantity260(),prVO.getQuantity270(),prVO.getQuantity280(),prVO.getQuantity290(),prVO.getQuantity300());
+		return 0;
+		
+	}
+
+	// Bong shoesize DB 등록을 위한 메소드 
+	private int insertShoeSize(String merchanCode ,int quantity250, int quantity260, int quantity270, int quantity280, int quantity290,
+			int quantity300) {
+		System.out.println("shoeSize DB 저장 : " + merchanCode);
+		
+		 SizeQuantityVO vo = new SizeQuantityVO();
+		 vo.setMerchanCode(merchanCode);
+		 vo.setQuantity250(quantity250);
+		 vo.setQuantity260(quantity260);
+		 vo.setQuantity270(quantity270);
+		 vo.setQuantity280(quantity280);
+		 vo.setQuantity290(quantity290);
+		 vo.setQuantity300(quantity300);
+		 
+		return dao.joinShoeSize(vo);
+	}
+
 	// 상품 등록 (=brand DB)
 	// 2020.08.14
 	public int joinBrand(String brand, MultipartFile mpFile3) throws IllegalStateException, IOException {
@@ -64,9 +93,9 @@ public class adminservice {
 			System.out.println("extName : " + extName);
 			String storedFileName = brand + extName;
 			System.out.println("storedFileName2 : " + storedFileName);
-			File file = new File(filePath + storedFileName);
+			File file = new File(storedFileName);
 			mpFile3.transferTo(file);
-			System.out.println("detail_src : " + filePath + storedFileName);
+			System.out.println("detail_src : " + storedFileName);
 			
 			// map 저장
 			brandMap.put("uri", storedFileName);
@@ -77,21 +106,26 @@ public class adminservice {
 		return dao.joinBrand(brandMap);
 	}
 	
+
+	
+	
 	// 상품 등록 (=shoesize DB)
-	public int joinShoeSize(String merchan_code, String shoe_size, String quantity) {
-		Map<String, String> shoeSizeMap = new HashMap<String, String>();
-		shoeSizeMap.put("merchan_code", merchan_code);
-		shoeSizeMap.put("shoe_size", shoe_size);
-		shoeSizeMap.put("quantity", quantity);
-		return dao.joinShoeSize(shoeSizeMap);
-	}
+//	public int joinShoeSize(String merchan_code, String shoe_size, String quantity) {
+//		Map<String, String> shoeSizeMap = new HashMap<String, String>();
+//		shoeSizeMap.put("merchan_code", merchan_code);
+//		shoeSizeMap.put("shoe_size", shoe_size);
+//		shoeSizeMap.put("quantity", quantity);
+//		return dao.joinShoeSize(shoeSizeMap);
+//	}
 	
 	// 상품 등록 (=merchandise DB)
-	public int joinform(String merchan_code, String merchan_name, String price, String brand, String category, MultipartFile mpFile1, MultipartFile mpFile2) throws IllegalStateException, IOException{
-		
+	public int joinForm(String merchan_code, String merchan_name, int price, String brand, String category, MultipartFile mpFile1, MultipartFile mpFile2) throws IllegalStateException, IOException{
+		System.out.println("merchandise DB 저장 : " + merchan_code);
 		// vo 저장
 		putintoVO putintoVO = new putintoVO();
+		
 		putintoVO.setBrand(brand);
+		// Bong 09.01 putIntoVO price int로 변경
 		putintoVO.setPrice(price);
 		putintoVO.setCategory(category);
 		putintoVO.setMerchanName(merchan_name);
@@ -421,12 +455,7 @@ public class adminservice {
 		return dao.SalesCustomerRank();
 	}
 
-
-
-
 	
-
-
 
 	// 2020.08.14
 	// putinto page 기본키검사
@@ -435,3 +464,4 @@ public class adminservice {
 	 */
 
 }
+

@@ -1,13 +1,17 @@
 package com.itbank.vo;
 
 public class putintoVO {
+	
 	private String merchanCode;
 	private String merchanName;
 	private String imgSrc;
 	private String brand;
 	private String category;
 	private String detailSrc;
-	private String price;
+	private int price;
+	
+	
+	
 	public String getMerchanCode() {
 		return merchanCode;
 	}
@@ -44,10 +48,10 @@ public class putintoVO {
 	public void setDetailSrc(String detailSrc) {
 		this.detailSrc = detailSrc;
 	}
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

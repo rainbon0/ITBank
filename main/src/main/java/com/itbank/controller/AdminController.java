@@ -24,6 +24,7 @@ import com.itbank.vo.BrandVO;
 import com.itbank.vo.CustomerRankVO;
 import com.itbank.vo.ItemChangeVO;
 import com.itbank.vo.MerchanRankVO;
+import com.itbank.vo.ProductRegistVO;
 
 @Controller
 public class AdminController {
@@ -50,21 +51,26 @@ public class AdminController {
 	
 	// 상품입고 POST
 	// 상품입력이 정사적으로 완료되면, '상품입력이 완료되었습니다'라는 창이 나타나도록 기능 구현(미구현) 
-	@RequestMapping(value = {"/putinto/","/putinto"}, method = RequestMethod.POST)
-	public ModelAndView putform(MultipartHttpServletRequest request) {
+	@RequestMapping(value = {"/putinto/"}, method = RequestMethod.POST)
+	public ModelAndView putform(MultipartHttpServletRequest request, ProductRegistVO prVO) {
+		
+		System.out.println("컨트롤러 진입은 되냐?");
 		
 		String merchan_code = request.getParameter("merchan_code");
-		String merchan_name = request.getParameter("merchan_name");
-		String shoe_size = request.getParameter("shoe_size");
-		String quantity = request.getParameter("quantity");
-		String price = request.getParameter("price");
-		String brand = request.getParameter("brand");
-		String category = request.getParameter("category");
+//		String merchan_name = request.getParameter("merchan_name");
+//		String shoe_size = request.getParameter("shoe_size");
+//		String quantity = request.getParameter("quantity");
+//		String price = request.getParameter("price");
+//		String brand = request.getParameter("brand");
+//		String category = request.getParameter("category");
+		
+		System.out.println("상품 코드 제대로 입력되었나 확인 : " + prVO.getMerchanCode() );
+		System.out.println("비교군(파라미터 방식) : " + merchan_code);
 		
 		ModelAndView mav = new ModelAndView("adminPage");
 		
-		MultipartFile mpFile1 = request.getFile("merchan_image");
-		MultipartFile mpFile2 = request.getFile("detail_src");
+		MultipartFile mpFile1 = request.getFile("merchanImage");
+		MultipartFile mpFile2 = request.getFile("detailSrc");
 		
 		MultipartFile mpFile3 = null;
 		// brand_icheck -> hidden 으로 숨겨져 있음
@@ -74,21 +80,27 @@ public class AdminController {
 		// 기본키 오류를 잡기 위해서 생성함
 		String[] pkcheck = ads.merchanAllList();
 		for (String pk:pkcheck) {
-			if(pk.equals(merchan_code)) {
+			if(pk.equals(prVO.getMerchanCode())) {
 				mav.setViewName("redirect:/putinto/");
 				return mav;
 			}
 		}
-			
+		
+		
+		
 		try {
-			ads.joinform(merchan_code, merchan_name, price, brand, category, mpFile1, mpFile2);
-			ads.joinShoeSize(merchan_code, shoe_size, quantity);
-			ads.joinBrand(brand, mpFile3);
+//			ads.joinform(merchan_code, merchan_name, price, brand, category, mpFile1, mpFile2);
+//			ads.joinShoeSize(merchan_code, shoe_size, quantity);
+			ads.merchandiseRegist(prVO, mpFile1, mpFile2);
+			ads.joinBrand(prVO.getBrand(), mpFile3);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
+		
+		
 		return mav;
 	}
+	
 	
 	// 매출관리
 	@RequestMapping("/salesmanage/")

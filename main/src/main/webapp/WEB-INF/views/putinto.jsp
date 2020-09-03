@@ -39,22 +39,22 @@
 			<div class="row mb-12">
 				<div class="col-md-8 order-2">
 					<div class="row ml-2">
-
-						<form action="${cpath }/putinto" method="post" class="col-md-12" enctype="multipart/form-data" id="inputForm">
+						<!-- Bong 09.01 form action 경로 수정 -->
+						<form action="${cpath }/putinto/" method="POST" class="col-md-12" enctype="multipart/form-data" id="inputForm">
 
 								<div class="form-group row">
 								
 									<!-- 상품코드 -->
 									<div class="col-md-12">
 										<label for="merchan_code" class="text-black">상품코드</label>
-										<input type="text" class="form-control" id="merchan_code" name="merchan_code" placeholder="상품코드를 입력하세요" required>
+										<input type="text" class="form-control" id="merchan_code" name="merchanCode" placeholder="상품코드를 입력하세요" required>
 									</div>
 								</div>
 								<!-- 상품이름 -->
 								<div class="form-group row">
 									<div class="col-md-12">
 										<label for="merchan_name" class="text-black">상품이름</label>
-										<input type="text" class="form-control" id="merchan_name" name="merchan_name" placeholder="상품이름을 입력하세요" required>
+										<input type="text" class="form-control" id="merchan_name" name="merchanName" placeholder="상품이름을 입력하세요" required>
 									</div>
 								</div>
 								<!-- 상품이미지 -->
@@ -62,39 +62,37 @@
 								<div class="form-group row">
 									<div class="col-md-12" id="imageformat">
 										<label for="merchan_image" class="text-black">상품이미지 ( 479 * 340 )</label>
-										<input type="file" class="form-control" id="merchan_image" name="merchan_image" onchange="TypeCheck(this)" required>
+										<input type="file" class="form-control" id="merchan_image" name="merchanImage" onchange="TypeCheck(this)" required>
 									</div>
 									<div style="text-align: center;">
 										<img class="col-md-10" id="img-check" style="margin-bottom: 15px; margin-top: 15px">
 									</div>
 								</div>
+								
+								
 								<!-- 신발 사이즈 -->
+								<!-- Bong 사이즈 입력 부분 수정 -->
 								<div class="form-group row">
 									<div class="col-md-12">
 										<label for="shoe_size" class="text-black">신발 사이즈</label>
-										<select id="shoe_size" name="shoe_size" class="form-control">
-												<option>== 선택 ==</option>
-												<option value="200"> 1. 200</option>
-												<option value="210"> 2. 210</option>
-												<option value="220"> 3. 220</option>
-												<option value="230"> 4. 200</option>
-												<option value="240"> 5. 240</option>
-												<option value="250"> 6. 250</option>
-												<option value="260"> 7. 260</option>
-												<option value="270"> 8. 270</option>
-												<option value="280"> 9. 280</option>
-												<option value="290">10. 290</option>
-										</select>
+										<input type="number" class="form-control" name="quantity250" placeholder="250 사이즈 재고" required>
+										<input type="number" class="form-control" name="quantity260" placeholder="260 사이즈 재고" required>
+										<input type="number" class="form-control" name="quantity270" placeholder="270 사이즈 재고" required>
+										<input type="number" class="form-control" name="quantity280" placeholder="280 사이즈 재고" required>
+										<input type="number" class="form-control" name="quantity290" placeholder="290 사이즈 재고" required>
+										<input type="number" class="form-control" name="quantity300" placeholder="300 사이즈 재고" required>
 									</div>
 								</div>
 							
 								<!-- 상품 재고 -->
+							    <!-- Bong 상품 재고 부분 주석 처리 -->
+							    <!--  
 								<div class="form-group row">
 									<div class="col-md-12">
 										<label for="quantity" class="text-black">상품재고</label>
 										<input type="number" class="form-control" id="quantity" name="quantity" placeholder="상품재고를 입력하세요" required>
 									</div>
-								</div>
+								</div> -->
 								
 								
 								<!-- 상품가격 -->
@@ -105,6 +103,7 @@
 										<input type="number" class="form-control" id="price" name="price" placeholder="상품가격을 입력하세요" required>
 									</div>
 								</div>
+								
 								<!-- 브랜드 -->
 								<div class="form-group row">
 									<div class="col-md-12">
@@ -147,7 +146,7 @@
 								<div class="form-group row">
 									<div class="col-md-12">
 										<label for="detail_src" class="text-black">상세정보</label>
-										<input type="file" class="form-control" id="detail_src" name="detail_src" required>
+										<input type="file" class="form-control" id="detail_src" name="detailSrc" required>
 									</div>
 								</div>
 								

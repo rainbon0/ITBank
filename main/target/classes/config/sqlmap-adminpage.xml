@@ -67,8 +67,19 @@
 </insert>
 
 <insert id="joinShoeSize" parameterType="map">
-	insert into shoesize (merchan_code, shoe_size, quantity) values ( #{merchan_code}, ${shoe_size}, ${quantity } )
+	insert all 
+		into shoesize (merchan_code, shoe_size, quantity) values (#{merchanCode}, 250, ${quantity250 }) 
+		into shoesize (merchan_code, shoe_size, quantity) values (#{merchanCode}, 260, ${quantity260 })
+		into shoesize (merchan_code, shoe_size, quantity) values (#{merchanCode}, 270, ${quantity270 })
+		into shoesize (merchan_code, shoe_size, quantity) values (#{merchanCode}, 280, ${quantity280 })
+		into shoesize (merchan_code, shoe_size, quantity) values (#{merchanCode}, 290, ${quantity290 })
+		into shoesize (merchan_code, shoe_size, quantity) values (#{merchanCode}, 300, ${quantity300 })
+	select * from DUAL	
+	
 </insert>
+
+
+
 
 <insert id="joinBrand" parameterType="map">
 	insert into brand (uri, name) values (#{uri }, #{name } )
